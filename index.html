@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>صدقة جارية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#fbc2eb,#f9d1e7,#fadadd);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family: Tahoma, sans-serif;
+  overflow:hidden;
+}
+
+#container{
+  text-align:center;
+}
+
+#tasbih{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  border:none;
+  font-size:22px;
+  background:white;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+  cursor:pointer;
+}
+
+#counter{
+  margin-top:15px;
+  font-size:18px;
+  color:#7a2e4d;
+  display:none;
+}
+
+.zikr{
+  position:absolute;
+  font-size:26px;
+  color:#7a2e4d;
+  animation: float 2.8s ease-out forwards;
+}
+
+@keyframes float{
+  0%{opacity:1; transform:translateY(0) scale(1);}
+  100%{opacity:0; transform:translateY(-140px) scale(1.4);}
+}
+
+#share{
+  position:fixed;
+  bottom:25px;
+  background:#25D366;
+  color:white;
+  padding:12px 22px;
+  border-radius:30px;
+  border:none;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <button id="tasbih">اضغطي هنا</button>
+  <div id="counter">عدد التسبيح: <span id="count">0</span></div>
+</div>
+
+<button id="share">شارك الأجر</button>
+
+<audio id="sound" src="https://cdn.pixabay.com/audio/2023/03/28/audio_8b8fae2c91.mp3"></audio>
+
+<script>
+let count = 0;
+const tasbih = document.getElementById("tasbih");
+const counter = document.getElementById("counter");
+const countSpan = document.getElementById("count");
+const sound = document.getElementById("sound");
+
+tasbih.onclick = () => {
+  if(navigator.vibrate) navigator.vibrate(50);
+
+  sound.currentTime = 0;
+  sound.play();
+
+  count++;
+  countSpan.textContent = count;
+  counter.style.display = "block";
+  tasbih.textContent = "📿";
+
+  const zikr = document.createElement("div");
+  zikr.className = "zikr";
+  zikr.textContent = "لا إله إلا الله";
+  zikr.style.left = Math.random()*80 + "vw";
+  zikr.style.top = Math.random()*40 + 40 + "vh";
+  document.body.appendChild(zikr);
+
+  setTimeout(()=>zikr.remove(),2800);
+};
+
+document.getElementById("share").onclick = ()=>{
+  const text = "اضغطي وسبّحي 🤍\nلا إله إلا الله\nصدقة جارية";
+  window.open("https://wa.me/?text="+encodeURIComponent(text));
+};
+</script>
+
+</body>
+</html>
